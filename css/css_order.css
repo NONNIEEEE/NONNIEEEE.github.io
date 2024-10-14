@@ -1,0 +1,352 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    line-height: 1.6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+/* Header Styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .logo img {
+    max-width: 150px;
+}
+
+.logo {
+    flex: 1;
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.search-container input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 300px;
+    font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+}
+
+header nav {
+    display: flex;
+    gap: 15px;
+}
+
+header nav a img {
+    width: 24px;
+    height: 24px;
+}
+
+header nav a:hover {
+    border-bottom: 2px solid #ff69b4;
+    padding-bottom: 5px;
+    opacity: 0.9;
+}
+
+/* Product Section */
+.categories {
+    padding: 20px; /* Space around the category section */
+    margin-top: 20px; /* Space above the categories */
+}
+
+.product-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.product-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 48%; /* Set the width of the image container */
+    height: 200px; /* Fixed height for product images */
+}
+
+.product-images img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    object-fit: fill;
+}
+
+.product-images img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-details {
+    flex-basis: 50%; /* Take half space for product details */
+    padding: 20px; /* Padding inside the product details */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-details h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.product-details .price {
+    font-size: 22px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.product-details label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.product-details select {
+    margin-bottom: 20px; /* Space below select box */
+    padding: 5px;
+    width: 100px; /* Fixed width for select */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+}
+
+.product-details select:focus {
+    border-color: #ff69b4; /* Color when focused */
+}
+
+.product-details h2 {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.wishlist-container {
+    margin-top: 10px;
+}
+
+#wishlist-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+#wishlist-icon {
+    font-size: 20px;
+    margin-right: 8px;
+    color: #000000;
+}
+
+.saved #wishlist-icon {
+    color: black; /* Color when saved */
+}
+
+.saved #wishlist-text {
+    color: black; /* Text color when saved */
+}
+
+/* Address Form */
+.address-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Space between fields */
+    margin-top: 20px;
+}
+
+.address-form input,
+.address-form select {
+    padding: 10px; /* Padding inside inputs */
+    width: 100%; /* Full width */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.address-form input::placeholder {
+    color: #999; /* Placeholder text color */
+}
+
+.address-form button {
+    padding: 10px;
+    background-color: black; /* Button color */
+    color: white; /* Text color */
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.address-form button:hover {
+    background-color: #333; /* Darker background on hover */
+    transform: scale(1.02); /* Slightly scale up */
+}
+
+/* Footer Section */
+footer {
+    background-color: #fff;
+    padding: 40px 20px; /* Padding for footer */
+    text-align: left;
+    width: 100%;
+    height: 100%;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Space below footer content */
+}
+
+.footer-text h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px; /* Space below heading */
+}
+
+.footer-text p {
+    font-size: 1em;
+    color: #333; /* Text color in footer */
+}
+
+.footer-subscribe {
+    display: flex; /* Flex layout for subscription */
+}
+
+.footer-subscribe input[type="email"] {
+    padding: 10px; /* Padding for email input */
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px; /* Rounded corners */
+    width: 300px; /* Width of email input */
+}
+
+.footer-subscribe button {
+    padding: 10px 20px; /* Padding for subscribe button */
+    background-color: #555; /* Button background */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 0 4px 4px 0; /* Rounded corners */
+    cursor: pointer;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px; /* Space above footer bottom */
+    border-top: 1px solid #ccc; /* Top border */
+}
+
+.footer-bottom p {
+    font-size: 0.9em; /* Font size for bottom text */
+    color: #777; /* Color for bottom text */
+}
+
+.social-icons a {
+    margin: 0 10px; /* Space between social icons */
+}
+
+.social-icons img {
+    width: 24px; /* Size of social icons */
+    height: 24px;
+}
+
+.icon img {
+    width: 40px; /* Size of larger icons */
+    height: 40px;
+}
+
+/* Transitions for buttons and links */
+button, a {
+    transition: all 0.3s ease; /* Smooth transition for buttons and links */
+}
+
+button:hover, a:hover {
+    opacity: 0.8; /* Slight opacity change on hover */
+}
+
+/* Navigation Bars */
+.nav1 {
+    height: 10px; /* Height of nav1 */
+    background-color: #ffcad4; /* Background color */
+}
+
+.nav2 {
+    height: 30px; /* Height of nav2 */
+    background-color: #a0d0fa; /* Background color */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-container {
+        flex-direction: column; /* Stack items in column on smaller screens */
+    }
+
+    .product-details {
+        max-width: 100%; /* Full width for details on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column; /* Stack header items on small screens */
+        gap: 10px; /* Space between header items */
+    }
+
+    .search-container input[type="text"] {
+        width: 100%; /* Full width for search input */
+    }
+
+    footer {
+        padding: 20px; /* Less padding for footer on small screens */
+    }
+
+    .footer-content {
+        flex-direction: column; /* Stack footer content on small screens */
+        text-align: center; /* Center align footer text */
+    }
+
+    .footer-subscribe input[type="email"] {
+        width: 100%; /* Full width for email input in footer */
+    }
+}
