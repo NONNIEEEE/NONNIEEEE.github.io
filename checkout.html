@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Warinon Jewelry Store</title>
+    <link rel="stylesheet" href="css/checkout.css">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon"> <!-- Add this line for favicon -->
+</head>
+<body>
+<header>
+    <div class="logo">
+        <a href="index.html"><img src="img/logo.png" alt="WARINON Logo" class="large-logo"></a>
+    </div>
+    <nav>
+        <div class="search-container">
+            <input type="text" placeholder="Search">
+            <img src="img/loupe.png" alt="Search Icon" class="search-icon">
+        </div>
+        <a href="wishlist.html" class="heart-link">
+            <img src="img/heart.png" alt="Favorites Icon" class="heart-icon">
+        </a>
+        <a href="#" class="icon"><img src="img/user.png" alt="Account"></a>
+    </nav>
+</header>
+
+<div class="nav1"><nav></nav></div>
+<div class="nav2"><nav></nav></div>
+
+<section id="checkout-container">
+    <div id="product-details">
+        <h2>Product Details</h2>
+        <div class="details"></div>
+    </div>
+    <div id="order-summary">
+        <h2>Order Summary</h2>
+        <p><strong>Products:</strong></p>
+        <ul id="summary-product-list"></ul>
+        <p><strong>Price per item:</strong> <span id="summary-product-price"></span></p>
+        <p><strong>Total:</strong> <span id="summary-total-price"></span></p>
+        <button id="place-order-button">Place Order</button>
+    </div>
+</section>
+
+<footer>
+    <p>© warinon</p>
+    <nav>
+        <a href="#">ติดต่อเรา</a>
+        <a href="#">แจ้งชำระเงิน</a>
+        <a href="#">บัญชีของฉัน</a>
+        <a href="#">ข้อกำหนดการใช้บริการ</a>
+        <a href="#">นโยบายความเป็นส่วนตัว</a>
+    </nav>
+</footer>
+
+<script>
+    // Retrieve product from sessionStorage
+    const wishlist = JSON.parse(sessionStorage.getItem('wishlist')) || [];
+    const totalPrice = sessionStorage.getItem('totalPrice') || 0;
+
+    // Display all products in the wishlist
+    const productDetails = document.getElementById('product-details');
+    const orderSummary = document.getElementById('order-summary');
+
+    wishlist.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <div class="details">
+                <p>${product.name}</p>
+                <p>${product.price}</p>
+            </div>
+        `;
+        productDetails.appendChild(productElement);
+
+        // Populate order summary
+        const summaryProductList = document.getElementById('summary-product-list');
+        const productListItem = document.createElement('li');
+        productListItem.innerText = product.name; // Add product name to the list
+        summaryProductList.appendChild(productListItem);
+
+        // Get the price for the first product to display
+        if (!document.getElementById('summary-product-price').innerText) {
+            document.getElementById('summary-product-price').innerText = product.price;
+        }
+    });
+
+    // Populate total price
+    document.getElementById('summary-total-price').innerText = `฿${parseFloat(totalPrice).toLocaleString()}`;
+
+    // Handle "Place Order" button click
+    document.getElementById('place-order-button').addEventListener('click', () => {
+        // Set quantity as 1 since we removed the input field
+        const quantity = 1;  
+        
+        const totalAmount = wishlist.reduce((acc, product) => {
+            const productPrice = parseFloat(product.price.replace('฿', '').replace(',', ''));
+            return acc + (productPrice * quantity);
+        }, 0).toFixed(2); // Calculate total price
+
+        // Get all product names for the URL
+        const productNames = wishlist.map(product => product.name).join(', '); // Get all product names
+        
+        // Redirect to thank you page with query parameters
+        window.location.href = `thankyou.html?product=${encodeURIComponent(productNames)}&quantity=${quantity}&total=${totalAmount}`; // Redirect with query params
+    });
+</script>
+</body>
+</html>

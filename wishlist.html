@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist - Warinon Jewelry Store</title>
+    <link rel="stylesheet" href="css/wishlist.css">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon"> <!-- Add this line for favicon -->
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <a href="index.html"><img src="img/logo.png" alt="WARINON Logo" class="large-logo"></a>
+    </div>
+    <div class="header-icons">
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+            <button>
+                <img src="img/loupe.png" alt="Search" class="small-icon">
+            </button>
+        </div>
+        <img src="img/heart.png" alt="Favorites" class="icon"> 
+        <img src="img/user.png" alt="User" class="icon">
+    </div>
+</header>
+<div class="nav1"><nav></nav></div>
+<div class="nav2"><nav></nav></div>
+
+<section class="main-banner">
+    <img src="img/wishlist.png" alt="Banner Image">
+</section>
+
+<section id="wishlist-container" class="wishlist-section">
+    <div class="wishlist-content" id="wishlist-content">
+        <h1>Let shine!</h1>
+        <p>Add items to your basket and place order here.</p>
+        <button id="home-button" onclick="window.location.href='index.html'">HOME</button>
+    </div>
+    <div id="total-price" class="total-price"></div>
+    <button id="checkout-button" class="checkout-btn" style="display:none;">Checkout</button>
+</section>
+
+<footer>
+    <p>© warinon</p>
+    <nav>
+        <a href="#">ติดต่อเรา</a>
+        <a href="#">แจ้งชำระเงิน</a>
+        <a href="#">บัญชีของฉัน</a>
+        <a href="#">ข้อกำหนดการใช้บริการ</a>
+        <a href="#">นโยบายความเป็นส่วนตัว</a>
+    </nav>
+</footer>
+
+<script>
+    const wishlistContainer = document.getElementById('wishlist-container');
+    const wishlistContent = document.getElementById('wishlist-content');
+    const totalPriceElement = document.getElementById('total-price');
+    const checkoutButton = document.getElementById('checkout-button');
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+    let totalPrice = 0; // Moved totalPrice declaration to the top to use in different functions
+
+    if (wishlist.length === 0) {
+        wishlistContainer.innerHTML = 
+            `<div class="wishlist-content">
+                <h1>Let shine!</h1>
+                <p>Add items to your basket and place order here.</p>
+                <button id="home-button" onclick="window.location.href='index.html'">HOME</button>
+            </div>`;
+    } else {
+        wishlistContent.style.display = 'none'; // Hide "Let shine!" content when wishlist has items
+
+        wishlist.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.classList.add('wishlist-item');
+            productElement.innerHTML = 
+                `<div class="product-info">
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="details">
+                        <h2>${product.name}</h2>
+                        <p class="price">${product.price}</p>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div class="quantity-control">
+                        <button class="quantity-btn" data-action="decrease">-</button>
+                        <input type="number" value="1" min="1" class="quantity-input">
+                        <button class="quantity-btn" data-action="increase">+</button>
+                    </div>
+                    <button class="remove-btn">🖤 Remove from Wishlist</button>
+                </div>`;
+            wishlistContainer.appendChild(productElement);
+
+            // Parse price from string and accumulate to totalPrice
+            totalPrice += parseFloat(product.price.replace(/[^0-9.-]+/g, ''));
+
+            // Handle quantity changes
+            productElement.querySelectorAll('.quantity-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const input = productElement.querySelector('.quantity-input');
+                    let value = parseInt(input.value);
+
+                    if (this.dataset.action === 'increase') value++;
+                    if (this.dataset.action === 'decrease' && value > 1) value--;
+
+                    input.value = value;
+
+                    // Update total price based on quantity
+                    const itemPrice = parseFloat(product.price.replace(/[^0-9.-]+/g, ''));
+                    const itemTotalPrice = itemPrice * value;
+                    totalPrice += (this.dataset.action === 'increase' ? itemPrice : -itemPrice);
+                    updateTotalPrice();
+                });
+            });
+
+            // Handle removing the product from the wishlist
+            productElement.querySelector('.remove-btn').addEventListener('click', () => {
+                removeFromWishlist(product.name);
+            });
+        });
+
+        updateTotalPrice(); // Call to update total price on load
+    }
+
+    function updateTotalPrice() {
+        totalPriceElement.innerHTML = `Total Price: $${totalPrice.toFixed(2)}`;
+        checkoutButton.style.display = totalPrice > 0 ? 'block' : 'none'; // Show checkout button if total is greater than 0
+
+        // Add click event for the checkout button
+        checkoutButton.onclick = () => {
+            // Store wishlist items and total price in sessionStorage for checkout
+            sessionStorage.setItem('wishlist', JSON.stringify(wishlist));
+            sessionStorage.setItem('totalPrice', totalPrice);
+            window.location.href = 'checkout.html'; // Redirect to checkout page
+        };
+    }
+
+    function removeFromWishlist(productName) {
+        const updatedWishlist = wishlist.filter(item => item.name !== productName);
+        localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+        location.reload(); // Refresh the page
+    }
+</script>
+
+</body>
+</html>

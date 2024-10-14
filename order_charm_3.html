@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lake Baikal Dangle Charm</title>
+    <link rel="stylesheet" href="css/css_order.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon"> <!-- Add this line for favicon -->
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="/img/logo.png" alt="Warinon Jewelry Store Logo"></a>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search">
+            <img src="img/loupe.png" alt="Search Icon" class="search-icon">
+        </div>
+        <nav>
+            <a href="wishlist.html"><img src="img/heart.png" alt="Favorites Icon"></a>
+            <a href="#"><img src="img/user.png" alt="User Icon"></a>
+        </nav>
+    </header>
+    <div class="nav1">
+        <nav></nav>
+    </div>
+    <div class="nav2">
+        <nav></nav>
+    </div>
+    <!-- Product Section -->
+    <section class="categories">
+        <div class="product-container">
+            <div class="product-images">
+                <img src="img/charm31.jpg" alt="Disney Warinon Moments Heart Clasp Snake Chain Bracelet" style="object-fit: cover;">
+                <img src="img/charm32.jpg" alt="Lake Baikal Dangle Charm">
+                <img src="img/charm33.jpg" alt="Lake Baikal Dangle Charm">
+                <img src="img/charm34.jpg" alt="Lake Baikal Dangle Charm">
+
+            </div>
+            <div class="product-details">
+                <h1>Lake Baikal Dangle Charm</h1>
+                <p class="price">฿ 2,300.00</p>
+                <label for="size">Select Size</label>
+                <br>
+                <select id="size">
+                    <option>-</option>
+                </select>
+                <div class="wishlist-container">
+                    <button id="wishlist-btn">
+                        <i id="wishlist-icon" class="fa fa-heart-o"></i>
+                        <span id="wishlist-text">Save to Wishlist</span>
+                    </button>
+                </div>
+                <section>
+                    <h2>Address</h2>
+                    <form class="address-form" id="address-form">
+                        <input type="text" placeholder="First Name" id="first-name" required>
+                        <input type="text" placeholder="Last Name" id="last-name" required>
+                        <input type="text" placeholder="Address" id="address" required>
+                        <input type="text" placeholder="Apartment, suite, etc." id="apartment">
+                        <input type="text" placeholder="City" id="city" required>
+                        <label for="country">Country</label>
+                        <select id="country" name="country" required>
+                            <option value="Thailand">Thailand</option>
+                            <option value="Australia">Australia</option>
+                            <option value="India">India</option>
+                            <option value="Pakistan">Pakistan</option>
+                            <option value="Indonesia">Indonesia</option>
+                            <option value="New Zealand">New Zealand</option>
+                        </select>
+                        <input type="text" placeholder="Postal/Zip Code" id="postal-code" required>
+                        <input type="text" placeholder="Phone" id="phone" required>
+                        <button type="submit" id="pay-button" disabled>PAY</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </section>
+
+
+
+        <!-- Footer Section -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-text">
+                    <h3>Get The Latest From Warinon!</h3>
+                    <p>Sign up and be the first to hear about new arrivals, promotions and exclusive sneak peeks.</p>
+                </div>
+                <div class="footer-subscribe">
+                    <input type="email" placeholder="Enter email address">
+                    <button>SIGN UP</button>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                <p>© ALL RIGHTS RESERVED. 2025 Warinon</p>
+                <div class="social-icons">
+                    <a href="#"><img src="img/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="img/instagram.png" alt="Instagram"></a>
+                    <a href="#"><img src="img/youtube.png" alt="YouTube"></a>
+                    <a href="#"><img src="img/pinterest.png" alt="Pinterest"></a>
+                </div>
+            </div>
+        </footer>
+        <script>
+            // Function to validate form fields and enable/disable PAY button
+            function validateForm() {
+                const form = document.getElementById('address-form');
+                const payButton = document.getElementById('pay-button');
+                const inputs = form.querySelectorAll('input[required], select[required]');
+    
+                let isValid = true;
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                    }
+                });
+    
+                payButton.disabled = !isValid; // Enable or disable PAY button based on validation
+            }
+    
+            // Check form fields on input change
+            document.getElementById('address-form').addEventListener('input', validateForm);
+    
+            // Handle form submission
+            document.getElementById('address-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form from submitting
+                if (this.checkValidity()) {
+                    window.location.href = 'thankyou.html'; // Redirect to home page if form is valid
+                }
+            });
+    
+            // Wishlist functionality
+            window.onload = function () {
+                const productName = document.querySelector('h1').textContent;
+                const icon = document.getElementById('wishlist-icon');
+                const text = document.getElementById('wishlist-text');
+                let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    
+                const productInWishlist = wishlist.some(item => item.name === productName);
+                if (productInWishlist) {
+                    icon.classList.replace('fa-heart-o', 'fa-heart');
+                    text.textContent = 'Remove from Wishlist';
+                } else {
+                    icon.classList.replace('fa-heart', 'fa-heart-o');
+                    text.textContent = 'Save to Wishlist';
+                }
+            };
+    
+            // Handle Wishlist button
+            document.getElementById('wishlist-btn').addEventListener('click', function () {
+                const icon = document.getElementById('wishlist-icon');
+                const text = document.getElementById('wishlist-text');
+    
+                const productName = document.querySelector('h1').textContent;
+                const productPrice = document.querySelector('.price').textContent;
+                const productImage = document.querySelector('.product-images img').src;
+    
+                const product = { name: productName, price: productPrice, image: productImage };
+                let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+                const index = wishlist.findIndex(item => item.name === productName);
+    
+                if (index !== -1) {
+                    wishlist.splice(index, 1);
+                    icon.classList.replace('fa-heart', 'fa-heart-o');
+                    text.textContent = 'Save to Wishlist';
+                } else {
+                    wishlist.push(product);
+                    icon.classList.replace('fa-heart-o', 'fa-heart');
+                    text.textContent = 'Remove from Wishlist';
+                }
+    
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            });
+        </script>
+        <script>
+            // Handle form submission
+    document.getElementById('address-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form from submitting
+    
+        if (this.checkValidity()) {
+            const firstName = document.getElementById('first-name').value;
+            const lastName = document.getElementById('last-name').value;
+            const address = document.getElementById('address').value;
+            const apartment = document.getElementById('apartment').value;
+            const city = document.getElementById('city').value;
+            const country = document.getElementById('country').value;
+            const postalCode = document.getElementById('postal-code').value;
+            const phone = document.getElementById('phone').value;
+            const productName = document.querySelector('h1').textContent; // Get the product name
+    
+            // Create URL parameters
+            const params = new URLSearchParams({
+                firstName,
+                lastName,
+                address,
+                apartment,
+                city,
+                country,
+                postalCode,
+                phone,
+                product: productName // Include the product name
+            }).toString();
+    
+            window.location.href = `thankyou.html?${params}`; // Redirect with parameters
+        }
+    });
+    
+        </script>
+
+</body>
+
+</html>

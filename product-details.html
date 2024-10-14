@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="css/product-details.css">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon"> <!-- Add this line for favicon -->
+</head>
+<body>
+
+    <header>
+        <h1>Product Details</h1>
+    </header>
+
+    <section id="product-details">
+        <!-- รายละเอียดของผลิตภัณฑ์จะแสดงที่นี่ -->
+    </section>
+
+    <footer>
+        <p>© warinon</p>
+    </footer>
+
+    <script>
+        // ฟังก์ชันเพื่อดึงพารามิเตอร์จาก URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // ดึง productId จาก URL
+        const productId = getQueryParam('productId');
+
+        // ฟังก์ชันสำหรับดึงข้อมูลจาก products.json
+        async function fetchProductData() {
+            try {
+                const response = await fetch('products.json');
+                const products = await response.json();
+
+                // ค้นหาผลิตภัณฑ์ตาม ID
+                const product = products.find(p => p.id === productId);
+
+                if (product) {
+                    const productDetailsElement = document.getElementById('product-details');
+                    productDetailsElement.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}">
+                        <h2>${product.name}</h2>
+                        <p>${product.description}</p>
+                        <p class="price">${product.price}</p>
+                    `;
+                } else {
+                    document.getElementById('product-details').innerHTML = '<p>ผลิตภัณฑ์ไม่ถูกต้องหรือไม่มีอยู่ในระบบ</p>';
+                }
+            } catch (error) {
+                console.error('Error fetching product data:', error);
+                document.getElementById('product-details').innerHTML = '<p>เกิดข้อผิดพลาดในการโหลดข้อมูลผลิตภัณฑ์</p>';
+            }
+        }
+
+        // เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลเมื่อโหลดหน้า
+        fetchProductData();
+    </script>
+
+</body>
+</html>
